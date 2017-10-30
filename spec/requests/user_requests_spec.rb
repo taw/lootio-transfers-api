@@ -61,5 +61,10 @@ RSpec.describe "User requests", type: :request do
     expect(User.last.id).to eq(l.id)
   end
 
-  pending "PUT /users/:id"
+  # This is really PATCH not PUT
+  it "PUT /users/:id" do
+    m = User.create(mike_pence).tap(&:save!)
+    put("/users/#{m.id}", params: {first_name: "Michael"})
+    expect(User.last.name).to eq("Michael Pence")
+  end
 end

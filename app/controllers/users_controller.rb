@@ -10,10 +10,19 @@ class UsersController < ApplicationController
   def destroy
     user = User.find(params[:id])
     user.delete
+    render json: {result: "ok"}
   end
 
   def create
-    User.create(user_params)
+    User.create(user_params).save!
+    render json: {result: "ok"}
+  end
+
+  def update
+    user = User.find(params[:id])
+    user.update(user_params)
+    user.save!
+    render json: {result: "ok"}
   end
 
   private
