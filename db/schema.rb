@@ -10,7 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171026013830) do
+ActiveRecord::Schema.define(version: 20171030060904) do
+
+  create_table "tokens", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "transfers", force: :cascade do |t|
     t.integer "user_id", null: false

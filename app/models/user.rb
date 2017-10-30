@@ -1,5 +1,6 @@
 class User < ApplicationRecord
   has_many :transfers
+  has_many :tokens
   validates :first_name, presence: true, length: {maximum: 20}
   validates :last_name, presence: true, length: {maximum: 20}
   validates :address_line_1, presence: true, length: {maximum: 50}
@@ -15,5 +16,11 @@ class User < ApplicationRecord
 
   def name
     "#{first_name} #{last_name}"
+  end
+
+  # password management beyond scope
+  # just assume everybody's password is "password"
+  def verify_password(password)
+    password == "password"
   end
 end
