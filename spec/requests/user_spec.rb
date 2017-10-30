@@ -20,14 +20,32 @@ RSpec.describe "User requests", type: :request do
       DOB: Date.parse("7 June 1959"),
     }
   }
+  let(:lady_gaga) {
+    {
+      first_name: "Lady",
+      last_name: "Gaga",
+      address_line_1: "42 Fabulous Avenue",
+      DOB: Date.parse("28 March 1986"),
+    }
+  }
 
   it "POST /users" do
-
+    post("/users", params: lady_gaga)
+    expect(User.count).to eq(1)
+    expect(
+      User.last
+        .attributes
+        .slice("first_name", "last_name", "address_line_1", "DOB")
+    ).to eq({
+      "first_name"=>"Lady",
+      "last_name"=>"Gaga",
+      "address_line_1"=>"42 Fabulous Avenue",
+      "DOB"=>Date.parse("1986-03-28"),
+    })
   end
 
   it "GET /users/:id" do
-    u = User.create(mike_pence)
-    u.save!
+    u = User.create(mike_pence).tap(&:save!)
     get("/users/#{u.id}")
     expect(json).to eq({
       "name" => "Mike Pence",
@@ -36,10 +54,12 @@ RSpec.describe "User requests", type: :request do
   end
 
   it "DELETE /users/:id" do
-
+    m = User.create(mike_pence).tap(&:save!)
+    l = User.create(lady_gaga).tap(&:save!)
+    delete("/users/#{m.id}")
+    expect(User.count).to eq(1)
+    expect(User.last.id).to eq(l.id)
   end
 
-  it "PUT /users/:id" do
-
-  end
+  pending "PUT /users/:id"
 end
