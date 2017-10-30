@@ -5,7 +5,7 @@ RSpec.describe "Transfer requests", type: :request do
 
   end
 
-  it "DELETE /users/:user_id/transfers/:id" do
+  it "GET /users/:user_id/transfers/:id" do
 
   end
 
