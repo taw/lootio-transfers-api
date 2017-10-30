@@ -13,6 +13,7 @@
 ActiveRecord::Schema.define(version: 20171026013830) do
 
   create_table "transfers", force: :cascade do |t|
+    t.integer "user_id", null: false
     t.string "account_number_from", null: false
     t.string "account_number_to", null: false
     t.integer "amount_pennies", null: false
